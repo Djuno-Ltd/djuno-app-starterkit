@@ -1,0 +1,94 @@
+.workflowList {
+  padding: 0 2rem 1rem 2rem;
+  display: grid;
+  grid-template-columns: 3fr 2fr 3fr 2fr 2fr;
+  grid-template-areas: "name status progress action";
+
+  @media (max-width: 568px) {
+    grid-template-columns: 2fr 2fr 2fr 1fr 1fr;
+    grid-template-areas: "name status progress action";
+  }
+
+  & > div {
+    border-bottom: 1px solid theme("colors.slate.200");
+    width: 100%;
+  }
+
+  .header {
+    color: theme("colors.slate.400");
+    font-weight: 300;
+    padding: 0.5rem;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+}
+
+.empty {
+  border: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4rem;
+  flex-direction: column;
+  text-align: center;
+  gap: 0.3rem;
+
+  svg {
+    width: 300px;
+  }
+}
+
+.workflow {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 3fr 2fr 3fr 2fr minmax(36px, 2fr);
+  grid-template-areas: "col-name col-status col-progress col-action";
+
+  @media (max-width: 568px) {
+    grid-template-columns: 2fr 2fr 2fr 1fr minmax(36px, 1fr);
+    grid-template-areas: "col-name col-status col-progress col-action";
+    .date {
+      display: none;
+    }
+  }
+
+  &:hover {
+    background: theme("colors.slate.50");
+  }
+
+  & > div {
+    display: flex;
+    align-items: center;
+    color: theme("colors.slate.600");
+    padding: 0.75rem 0.5rem;
+    width: 100%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+
+    &:nth-child(5n) {
+      overflow: inherit;
+      text-overflow: unset;
+      direction: rtl;
+    }
+
+    p {
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+  }
+
+  .name {
+    gap: 0.5rem;
+    svg {
+      min-width: 28px;
+      max-width: 28px;
+      min-height: 28px;
+      max-height: 28px;
+      color: theme("colors.slate.500");
+    }
+  }
+}

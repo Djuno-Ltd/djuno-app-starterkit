@@ -1,0 +1,105 @@
+.button {
+  width: fit-content;
+  background-color: theme("colors.sky.600");
+  color: #fff;
+  font-weight: 500;
+  padding: 6px 14px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.1s;
+  border: 2px solid theme("colors.sky.600");
+  min-height: 40px;
+  display: flex;
+  gap: 4px;
+  white-space: nowrap;
+  align-items: center;
+  justify-content: center;
+
+  &.red {
+    background-color: theme("colors.red.500");
+    border: 2px solid theme("colors.red.500");
+  }
+
+  &.fullWidth {
+    width: 100%;
+  }
+
+  svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  &.light {
+    background-color: theme("colors.sky.50");
+    color: theme("colors.sky.500");
+    border: 2px solid theme("colors.sky.50");
+
+    &:hover,
+    &.active {
+      background-color: theme("colors.sky.50");
+      border: 2px solid theme("colors.slate.200");
+      box-shadow: none;
+    }
+  }
+
+  &.borderButton {
+    background-color: #fff;
+    color: theme("colors.sky.500");
+    border: 2px solid theme("colors.slate.200");
+    border-radius: 0.5rem;
+
+    &:hover,
+    &.active {
+      background-color: theme("colors.sky.50");
+      border: 2px solid theme("colors.sky.100");
+      box-shadow: none;
+    }
+  }
+
+  &.extraLight {
+    background-color: #fff;
+    color: theme("colors.sky.500");
+    border: 2px solid #fff;
+
+    &:hover,
+    &.active {
+      background-color: theme("colors.sky.50");
+      border: 2px solid theme("colors.sky.50");
+      box-shadow: none;
+    }
+
+    &.isDisabled {
+      color: theme("colors.slate.400");
+      background-color: theme("colors.slate.100");
+      border: 2px solid theme("colors.slate.100");
+      cursor: unset;
+      &:hover {
+        box-shadow: unset;
+      }
+    }
+  }
+
+  &:hover {
+    box-shadow: 0 8px 25px -8px theme("colors.sky.500");
+
+    &.red {
+      box-shadow: 0 8px 25px -8px theme("colors.red.500");
+    }
+  }
+
+  &.isDisabled {
+    background-color: theme("colors.slate.400");
+    border: 2px solid theme("colors.slate.400");
+    &:hover {
+      box-shadow: unset;
+    }
+  }
+}
+
+.buy-djib-btn {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  box-shadow: 0 8px 25px -8px theme("colors.sky.600");
+  z-index: 1000;
+}

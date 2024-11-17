@@ -1,0 +1,19 @@
+.skeleton {
+  border-radius: 0.5rem;
+  background-color: #f8fafc;
+  animation: skeleton-animation 1.5s infinite linear;
+
+}
+
+@keyframes skeleton-animation {
+  0% {
+    background-color: #f8fafc;
+  }
+  40%{
+    background-color: #E2E8F0;
+
+  }
+  100% {
+    background-color: #f8fafc;
+  }
+}

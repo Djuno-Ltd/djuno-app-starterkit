@@ -1,0 +1,61 @@
+.input {
+  position: relative;
+
+  &.fullWidth {
+    width: 100%;
+    input,
+    textarea {
+      width: 100%;
+    }
+  }
+  input,
+  textarea {
+    width: 100%;
+    display: flex;
+    background: theme("colors.slate.100");
+    border: 2px solid theme("colors.slate.100");
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+    color: theme("colors.slate.600");
+    transition: all 0.1s;
+
+    &.djibType {
+      padding: 0.5rem 5rem 0.5rem 1rem;
+    }
+
+    &:focus {
+      background: theme("colors.slate.50");
+      border: 2px solid theme("colors.slate.200");
+    }
+
+    &:disabled {
+      background: theme("colors.slate.100");
+      color: theme("colors.slate.300");
+    }
+  }
+
+  textarea {
+    min-height: 100px;
+    resize: none;
+  }
+
+  .djibUnit {
+    display: flex;
+    gap: 2px;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    right: 1rem;
+    transform: translateY(50%);
+    height: 22px;
+
+    p {
+      font-weight: 500;
+    }
+
+    svg {
+      width: 18px;
+      height: 18px;
+    }
+  }
+}

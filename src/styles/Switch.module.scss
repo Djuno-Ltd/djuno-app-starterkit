@@ -1,0 +1,41 @@
+.container {
+  display: flex;
+  gap: 0.5rem;
+
+  > p {
+    font-size: 0.9rem;
+    color: theme("colors.slate.500");
+  }
+  .switch {
+    width: 40px;
+    height: 22px;
+    background-color: theme("colors.slate.300");
+    border-radius: 100px;
+    transition: all 0.2s;
+    cursor: pointer;
+
+    > div {
+      width: 14px;
+      height: 14px;
+      background-color: #fff;
+      border-radius: 100px;
+      transform: translate(4px, 4px);
+      transition: all 0.2s;
+    }
+
+    &.active {
+      width: 40px;
+      height: 22px;
+      background-color: theme("colors.sky.500");
+      border-radius: 100px;
+
+      > div {
+        width: 14px;
+        height: 14px;
+        background-color: #fff;
+        border-radius: 100px;
+        transform: translate(20px, 4px);
+      }
+    }
+  }
+}

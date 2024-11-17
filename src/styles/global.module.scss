@@ -1,0 +1,10 @@
+.homeContent {
+  width: 100%;
+  height: calc(100vh - 72px - 88px);
+  border: 2px solid #fff;
+
+  &.dragActive {
+    background: theme("colors.slate.50");
+    border: 2px solid #5a97ed;
+  }
+}

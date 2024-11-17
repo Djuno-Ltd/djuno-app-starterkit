@@ -1,0 +1,152 @@
+.body {
+  padding: 0 0.5rem;
+
+  .logo {
+    > svg {
+      width: 80px;
+      height: 80px;
+    }
+  }
+
+  .desc {
+    padding: 1rem 0;
+    text-align: center;
+    color: theme("colors.slate.400");
+    line-height: 170%;
+  }
+
+  .amount {
+    display: flex;
+    gap: 2px;
+    right: 1rem;
+    width: 100%;
+    background: theme("colors.slate.100");
+    padding: 0.5rem 1.5rem;
+    border-radius: 1rem;
+
+    > p {
+      font-weight: 500;
+      font-size: 1.5rem;
+      color: theme("colors.slate.700");
+    }
+
+    div {
+      display: flex;
+      gap: 2px;
+      align-items: center;
+      margin-left: auto;
+
+      p {
+        font-weight: 500;
+        color: theme("colors.slate.700");
+      }
+      svg {
+        width: 18px;
+        height: 18px;
+      }
+    }
+  }
+
+  .payBtn {
+    margin-top: 1rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .question {
+    display: flex;
+    align-items: center;
+    position: relative;
+
+    .qinfo {
+      position: absolute;
+      box-shadow: 0 23px 60px rgba(0, 89, 176, 0.1);
+      width: 200px;
+      font-size: 0.7rem;
+      background: #fff;
+      padding: 0.75rem;
+      border-radius: 0.5rem;
+      left: calc(100% + 5px);
+      top: 10%;
+      color: theme("colors.slate.400");
+      border: 1px solid theme("colors.slate.100");
+
+      a {
+        color: theme("colors.sky.500");
+      }
+    }
+
+    svg {
+      color: theme("colors.slate.300");
+      cursor: pointer;
+
+      &:hover {
+        color: theme("colors.slate.400");
+      }
+    }
+  }
+
+  .switch {
+    display: flex;
+    gap: 0.8rem;
+    align-items: center;
+
+    > div {
+      p:first-child {
+        font-size: 0.9rem;
+        color: theme("colors.slate.500");
+      }
+    }
+  }
+}
+
+.status {
+  background-color: theme("colors.slate.50");
+  width: fit-content;
+  padding: 0.5rem;
+  border-radius: 100%;
+  margin: 1.5rem auto;
+
+  &.success {
+    background-color: #eefcf4;
+  }
+
+  &.error {
+    background-color: #fceeed;
+  }
+}
+
+.trackingCode {
+  text-align: center;
+  color: theme("colors.slate.400");
+  line-height: 170%;
+
+  span {
+    background-color: theme("colors.sky.50");
+    color: theme("colors.sky.500");
+    padding: 0.25rem 0.75rem;
+    border-radius: 0.25rem;
+    font-size: 0.9rem;
+    margin: 0 0.25rem;
+  }
+
+  p:nth-child(2) {
+    margin-bottom: 0.75rem;
+  }
+  p:nth-child(4) {
+    margin-top: 0.75rem;
+  }
+
+  padding-bottom: 1rem;
+}
+
+.tcode {
+  display: flex;
+  gap: 0.25rem;
+  align-items: center;
+  cursor: pointer;
+  svg {
+    width: 20px;
+    height: 20px;
+    margin-left: auto;
+  }
+}

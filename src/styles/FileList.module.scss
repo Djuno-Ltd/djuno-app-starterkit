@@ -1,0 +1,41 @@
+.fileList {
+  padding: 0 2rem 1rem 2rem;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-areas: "name size action";
+
+  @media (max-width: 568px) {
+    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-areas: "name size action";
+  }
+
+  & > div {
+    border-bottom: 1px solid theme("colors.slate.200");
+    width: 100%;
+  }
+
+  .header {
+    color: theme("colors.slate.400");
+    font-weight: 300;
+    padding: 0.5rem;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+}
+
+.empty {
+  border: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4rem;
+  flex-direction: column;
+  text-align: center;
+  gap: 0.3rem;
+
+  svg {
+    width: 300px;
+  }
+}

@@ -1,0 +1,46 @@
+.container {
+  display: flex;
+  gap: 0.5rem;
+
+  .item {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: theme("colors.slate.100");
+    color: theme("colors.slate.500");
+    border-radius: 100%;
+    cursor: pointer;
+    transition: all 0.1s;
+
+    &:hover,
+    &.selected {
+      background: theme("colors.sky.500");
+      color: #fff;
+    }
+
+    &.disabled:hover,
+    &.disabled {
+      background: theme("colors.slate.100");
+      color: theme("colors.slate.300");
+    }
+
+    &.dots {
+      background: #fff;
+      color: theme("colors.slate.500");
+      cursor: unset;
+      &:hover {
+        background: #fff;
+      }
+    }
+  }
+
+  .arrowLeft,
+  .arrowRight {
+    svg {
+      width: 18px;
+      height: 18px;
+    }
+  }
+}

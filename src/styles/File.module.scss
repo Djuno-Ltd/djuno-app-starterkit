@@ -1,0 +1,46 @@
+.file {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 2fr 1fr minmax(36px, 1fr);
+  grid-template-areas: "col-name col-size col-action";
+
+  @media (max-width: 568px) {
+    grid-template-columns: 2fr 1fr minmax(36px, 1fr);
+    grid-template-areas: "col-name col-size col-action";
+    .date {
+      display: none;
+    }
+  }
+
+  &:hover {
+    background: theme("colors.slate.50");
+  }
+
+  & > div {
+    display: flex;
+    align-items: center;
+    color: theme("colors.slate.600");
+    padding: 0.75rem 0.5rem;
+    width: 100%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+
+    p {
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+  }
+
+  .name {
+    gap: 0.5rem;
+    svg {
+      min-width: 28px;
+      max-width: 28px;
+      min-height: 28px;
+      max-height: 28px;
+      color: theme("colors.slate.500");
+    }
+  }
+}

@@ -1,0 +1,44 @@
+.progressBox {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 4px;
+}
+
+.progress {
+  width: 100%;
+  background-color: theme("colors.sky.100");
+  color: #fff;
+  border-radius: 6px;
+  transition: all 0.1s;
+  height: 18px;
+  position: relative;
+  white-space: nowrap;
+  overflow: hidden;
+
+  span {
+    display: block;
+    position: absolute;
+    // border-radius: 6px 0 0 6px;
+    background-color: theme("colors.sky.300");
+    height: 100%;
+    left: 0;
+    top: 0;
+    text-align: center;
+    font-size: 0.7rem;
+  }
+}
+
+.steps {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 0.85rem;
+  color: theme("colors.gray.500");
+  gap: 2px;
+  width: 60px;
+}
+.done {
+  font-size: 1rem;
+  color: theme("colors.gray.700");
+}
