@@ -140,7 +140,7 @@ function WalletDropdown({ showProfile = true }: { showProfile?: boolean }) {
           {accounts.length > 0 ? (
             <>
               <MetamaskIcon />
-              <p>{accounts[0]}</p>
+              <p>{metaWalletAddress}</p>
             </>
           ) : (
             "Connect Wallet"
