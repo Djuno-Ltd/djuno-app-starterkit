@@ -4,7 +4,7 @@ import styles from "./../styles/FileList.module.scss";
 import Skeleton from "./skeleton";
 import { ReactComponent as EmptyState } from "./../assets/icons/empty-state.svg";
 import { useAppDispatch, useAppSelector } from "../hooks";
-import { selectLoading as selectProfileLoading } from "../store/profileSlice";
+// import { selectLoading as selectProfileLoading } from "../store/profileSlice";
 import type { FileType } from "../types/file";
 import { selectFiles, selectLoading } from "../store/filesSlice";
 import { useSearch } from "../providers/SearchProvider";
@@ -14,7 +14,7 @@ function FileList2() {
   const files = useAppSelector(selectFiles);
   const [filteredFiles, setSearchedFiles] = useState<FileType[]>([]);
   const filesLoading = useAppSelector(selectLoading);
-  const profileLoading = useAppSelector(selectProfileLoading);
+  // const profileLoading = useAppSelector(selectProfileLoading);
 
   const dispatch = useAppDispatch();
   const { value: searchValue } = useSearch();
@@ -41,7 +41,7 @@ function FileList2() {
           )}
 
           {/*  */}
-          {(filesLoading || profileLoading) && (
+          {filesLoading && (
             <>
               {Array.from(Array(24).keys()).map((i) => (
                 <div
@@ -75,7 +75,6 @@ function FileList2() {
             </>
           )}
           {!filesLoading &&
-            !profileLoading &&
             filteredFiles?.map((file, i) => (
               <File2
                 key={`file-${i}`}

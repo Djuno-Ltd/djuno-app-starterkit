@@ -16,6 +16,7 @@ import NotFindPage from "./pages/NotFindPage";
 import { pdfjs as pdfjs_react } from "react-pdf";
 import SearchProvider from "./providers/SearchProvider";
 import FilesPage from "./pages/FilesPage";
+import Web3authProvider from "./providers/Web3authProvider";
 
 // pdfjs.GlobalWorkerOptions.workerSrc =
 //   "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.6.172/pdf.worker.min.js";
@@ -32,29 +33,31 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <Provider store={store}>
-    <MetaMaskProvider>
-      <SolanaWalletsProvider>
-        <SearchProvider>
-          <BrowserRouter>
-            <Routes>
-              <Route
-                path="/"
-                element={
-                  <AuthProvider>
-                    <App />
-                  </AuthProvider>
-                }
-              >
-                <Route index element={<HomePage />} />
-                <Route path="files" element={<FilesPage />} />
-                <Route path="settings" element={<SettingsPage />} />
-              </Route>
-              <Route path="*" element={<NotFindPage />} />
-            </Routes>
-          </BrowserRouter>
-        </SearchProvider>
-      </SolanaWalletsProvider>
-    </MetaMaskProvider>
+    <Web3authProvider>
+      <MetaMaskProvider>
+        <SolanaWalletsProvider>
+          <SearchProvider>
+            <BrowserRouter>
+              <Routes>
+                <Route
+                  path="/"
+                  element={
+                    <AuthProvider>
+                      <App />
+                    </AuthProvider>
+                  }
+                >
+                  <Route index element={<HomePage />} />
+                  <Route path="files" element={<FilesPage />} />
+                  <Route path="settings" element={<SettingsPage />} />
+                </Route>
+                <Route path="*" element={<NotFindPage />} />
+              </Routes>
+            </BrowserRouter>
+          </SearchProvider>
+        </SolanaWalletsProvider>
+      </MetaMaskProvider>
+    </Web3authProvider>
   </Provider>
 );
 

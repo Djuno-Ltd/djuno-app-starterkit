@@ -2,34 +2,30 @@ import { Fragment } from "react";
 import { Listbox, Transition } from "@headlessui/react";
 import { ReactComponent as ChevronUpDownIcon } from "./../assets/icons/chevron_up.svg";
 import { ReactComponent as CheckIcon } from "./../assets/icons/check.svg";
-
-import {
-  selectSelectedNetwork,
-  selectNetworks,
-  selectNetworkLoading,
-  changeSelectedNetwork,
-} from "./../store/networksSlice";
-import { useAppDispatch, useAppSelector } from "../hooks";
 import { LoadingSpin } from "./loading";
+import { useWeb3auth } from "../providers/Web3authProvider";
 
 function NetworksDropdown() {
-  const dispatch = useAppDispatch();
-  const networks = useAppSelector(selectNetworks);
-  const selectedNetwork = useAppSelector(selectSelectedNetwork);
-  const loadingNetwork = useAppSelector(selectNetworkLoading);
+  const {
+    networks,
+    loadingNetworks,
+    selectedNetwork,
+    handleChangeSelectedNetwork,
+  } = useWeb3auth();
 
   return (
     <Listbox
       value={selectedNetwork}
+      defaultValue={selectedNetwork}
       onChange={(e) => {
-        dispatch(changeSelectedNetwork(e));
+        handleChangeSelectedNetwork(e);
       }}
     >
       <div className="relative mt-1 min-w-[300px]">
         <Listbox.Button className="relative w-full h-12 cursor-default rounded-lg bg-white py-3 pl-3 pr-10 text-left drop-shadow focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-sky-300 sm:text-sm">
           <span className="block truncate">{selectedNetwork?.NetworkName}</span>
           <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-            {loadingNetwork ? (
+            {loadingNetworks ? (
               <LoadingSpin />
             ) : (
               <ChevronUpDownIcon
