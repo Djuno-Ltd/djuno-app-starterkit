@@ -3,7 +3,7 @@
   "version": "0.9.3",
   "private": true,
   "dependencies": {
-    "@djuno/web3auth-sdk": "^0.0.3",
+    "@djuno/web3auth-hook": "^0.0.4",
     "@ethersproject/providers": "^5.7.2",
     "@headlessui/react": "^1.7.14",
     "@react-spring/web": "^9.7.2",

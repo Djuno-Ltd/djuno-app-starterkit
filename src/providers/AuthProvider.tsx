@@ -16,7 +16,7 @@ import { toast } from "react-hot-toast";
 import { useMetamask } from "./MetamaskProvider";
 import { useAppDispatch } from "../hooks";
 import { getStorage, setStorage, removeStorage } from "../utils/helper";
-import { useWeb3auth } from "./Web3authProvider";
+import { useWeb3Auth } from "@djuno/web3auth-hook";
 
 export type AuthContextType = {
   logout: () => void;
@@ -34,7 +34,7 @@ export const AuthContext = createContext<AuthContextType>({
 });
 
 const AuthProvider = ({ children }: PropsWithChildren) => {
-  const { client, handleGetProfile } = useWeb3auth();
+  const { handshake, verify, getProfile } = useWeb3Auth();
   const [status, setStatus] = useState<Status>("connect_wallet");
   const { publicKey, signMessage, connecting, disconnect, connected, wallet } =
     useWallet();
@@ -104,7 +104,7 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
       try {
         setStorage("token", token);
         setStorage("publicKey", publicKey.toBase58());
-        handleGetProfile();
+        getProfile(token);
         setStatus("ok");
       } catch (e) {
         logout();
@@ -117,26 +117,26 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
       } else {
         setStatus("loading");
         const walletName = wallet?.adapter.name.toLowerCase();
-        if (!walletName || !client) return;
+        if (!walletName) return;
 
-        const response = await client.handshake(
+        const response = await handshake(
           networkId.toString(),
           publicKey.toBase58()
         );
 
         if (!response) return;
 
-        const message = new TextEncoder().encode(response.data);
+        const message = new TextEncoder().encode(response);
         const signature = await signMessage(message);
 
-        const authResponse = await client.verify(
+        const authResponse = await verify(
           networkId.toString(),
           publicKey.toBase58(),
           bs58.encode(signature)
         );
 
-        if (authResponse.data === null) logout();
-        else login(authResponse.data);
+        if (authResponse === null) logout();
+        else login(authResponse);
       }
     } catch (e: any) {
       console.log("getToken called catch!", e);
@@ -164,7 +164,7 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
           if (accounts[0]) {
             setStorage("token", token);
             setStorage("publicKey", getRealAddress(accounts[0]));
-            handleGetProfile();
+            getProfile(token);
             setStatus("ok");
           } else {
             metaLogout();
@@ -178,24 +178,24 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
         if (token && getStorage("publicKey") === getRealAddress(accounts[0])) {
           await login(token);
         } else {
-          if (!client) return;
-          const response = await client.handshake(
+          // if (!client) return;
+          const response = await handshake(
             networkId.toString(),
             getRealAddress(accounts[0])
           );
           if (!response) return;
 
-          const signature = await metaSignMessage(response.data);
+          const signature = await metaSignMessage(response);
           if (!signature) return;
 
-          const authResponse = await client.verify(
+          const authResponse = await verify(
             networkId.toString(),
             getRealAddress(accounts[0]),
             signature
           );
 
-          if (authResponse.data === null) metaLogout("authenticated error!");
-          else login(authResponse.data);
+          if (authResponse === null) metaLogout("authenticated error!");
+          else login(authResponse);
         }
       } catch (e: any) {
         console.log("getToken called catch!", e);
@@ -209,7 +209,15 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
         metaLogout();
       }
     },
-    [accounts, metaSignMessage, metaLogout, getRealAddress, dispatch, client]
+    [
+      accounts,
+      metaSignMessage,
+      metaLogout,
+      getRealAddress,
+      getProfile,
+      handshake,
+      verify,
+    ]
   );
 
   const contextValue = useMemo(

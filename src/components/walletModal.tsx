@@ -6,16 +6,19 @@ import styles from "./../styles/WalletModal.module.scss";
 import { ReactComponent as Logo } from "../assets/icons/logo.svg";
 import NetworksDropdown from "./networksDropdown";
 import { useMetamask, MetamaskIcon } from "../providers/MetamaskProvider";
-import { useWeb3auth } from "../providers/Web3authProvider";
+import { useWeb3authSetting } from "../providers/Web3authSettingProvider";
+import { useWeb3Auth } from "@djuno/web3auth-hook";
 
 function WalletModal({ absolute }: { absolute?: boolean }) {
   const { wallets, select } = useWallet();
   const { connect } = useMetamask();
-  const { networks, handleGetNetworks, selectedNetwork } = useWeb3auth();
+
+  const { selectedNetwork } = useWeb3authSetting();
+  const { networks, getNetworks } = useWeb3Auth();
 
   useEffect(() => {
-    networks.length === 0 && handleGetNetworks();
-  }, [handleGetNetworks, networks.length]);
+    networks.length === 0 && getNetworks();
+  }, [getNetworks, networks.length]);
 
   const handleClick = (walletName: WalletName) => {
     select(walletName);

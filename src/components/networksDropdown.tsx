@@ -3,15 +3,12 @@ import { Listbox, Transition } from "@headlessui/react";
 import { ReactComponent as ChevronUpDownIcon } from "./../assets/icons/chevron_up.svg";
 import { ReactComponent as CheckIcon } from "./../assets/icons/check.svg";
 import { LoadingSpin } from "./loading";
-import { useWeb3auth } from "../providers/Web3authProvider";
+import { useWeb3Auth } from "@djuno/web3auth-hook";
+import { useWeb3authSetting } from "../providers/Web3authSettingProvider";
 
 function NetworksDropdown() {
-  const {
-    networks,
-    loadingNetworks,
-    selectedNetwork,
-    handleChangeSelectedNetwork,
-  } = useWeb3auth();
+  const { networks, loading } = useWeb3Auth();
+  const { selectedNetwork, handleChangeSelectedNetwork } = useWeb3authSetting();
 
   return (
     <Listbox
@@ -25,7 +22,7 @@ function NetworksDropdown() {
         <Listbox.Button className="relative w-full h-12 cursor-default rounded-lg bg-white py-3 pl-3 pr-10 text-left drop-shadow focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-sky-300 sm:text-sm">
           <span className="block truncate">{selectedNetwork?.NetworkName}</span>
           <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-            {loadingNetworks ? (
+            {loading.networks ? (
               <LoadingSpin />
             ) : (
               <ChevronUpDownIcon

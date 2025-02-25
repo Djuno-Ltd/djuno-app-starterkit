@@ -8,27 +8,30 @@ import BlankAvatarImg from "../assets/images/blank-avatar.png";
 import classNames from "classnames";
 import Loading from "../components/loading";
 import styles from "./../styles/Settings.module.scss";
-import { useWeb3auth } from "../providers/Web3authProvider";
+import { useWeb3Auth } from "@djuno/web3auth-hook";
+import { getStorage } from "../utils/helper";
 
 function ProfileComponent() {
   const {
-    handleGetProfile,
-    handleGetProfileAvatar,
-    handleChangeProfile,
-    handleChangeProfileAvatar,
+    getProfile,
+    updateProfile,
+    getProfileAvatar,
+    saveProfileAvatar,
     profile,
     profileAvatar,
-    loadingProfile: loading,
-  } = useWeb3auth();
+    loading,
+  } = useWeb3Auth();
+
   const avatarRef = useRef<HTMLInputElement>(null);
   const [avatar, setAvatar] = useState<string | null>(profileAvatar);
   const [fullname, setFullname] = useState<string>(profile?.Name || "");
   const [email, setEmail] = useState<string>(profile?.Email || "");
 
   useEffect(() => {
-    handleGetProfile();
-    handleGetProfileAvatar();
-  }, [handleGetProfile, handleGetProfileAvatar]);
+    getProfile(getStorage("token"));
+    getProfileAvatar(getStorage("token"));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     setFullname(profile?.Name || "");
@@ -47,7 +50,7 @@ function ProfileComponent() {
         const formData = new FormData();
         formData.set("img", files[0]);
         const file = await toBase64(files[0]);
-        handleChangeProfileAvatar(formData);
+        saveProfileAvatar(getStorage("token"), formData as any);
         setAvatar(file);
       } catch (e) {}
     }
@@ -67,21 +70,24 @@ function ProfileComponent() {
   const handleSave = useCallback(async () => {
     if (!fullname && !email) return;
     try {
-      handleChangeProfile({ Name: fullname, Email: email });
-      handleGetProfileAvatar();
+      await updateProfile(getStorage("token"), {
+        Name: fullname,
+        Email: email,
+      });
+      await getProfileAvatar(getStorage("token"));
     } catch (e: any) {
       toast.error(e?.data || "Something went wrong!");
     }
-  }, [email, fullname, handleChangeProfile, handleGetProfileAvatar]);
+  }, [email, fullname, getProfileAvatar, updateProfile]);
 
   return (
     <>
-      {loading && (
+      {loading.profile && (
         <div style={{ height: 400, display: "flex", alignItems: "center" }}>
           <Loading />
         </div>
       )}
-      {!loading && (
+      {!loading.profile && (
         <div className="flex items-center py-8 px-4 flex-col max-w-xs m-auto gap-4">
           <div className="w-24 h-24 rounded-full overflow-hidden cursor-pointer">
             <img
