@@ -1299,10 +1299,10 @@
   resolved "https://registry.npmjs.org/@csstools/selector-specificity/-/selector-specificity-2.2.0.tgz"
   integrity sha512-+OJ9konv95ClSTOJCmMZqpd5+YGsB2S+x6w3E1oaM8UuR5j8nTNHYSz8c9BEPGDOCMQYIEEGlVPj/VY64iTbGw==
 
-"@djuno/web3auth-sdk@^0.0.2":
-  version "0.0.2"
-  resolved "https://registry.npmjs.org/@djuno/web3auth-sdk/-/web3auth-sdk-0.0.2.tgz"
-  integrity sha512-WcANj8Gd6nvryvVjOt6tR8dP1dw50c7Yw0/wEFNq7lpDlpkg2iIABdvnBtu4hnBLBfv9ErVBKTqeOHO7Z7MngA==
+"@djuno/web3auth-sdk@^0.0.3":
+  version "0.0.3"
+  resolved "https://registry.npmjs.org/@djuno/web3auth-sdk/-/web3auth-sdk-0.0.3.tgz"
+  integrity sha512-7M6Vg2n/ZP2g1qDhPm/iBQNxtBGctEDNAqqk5064o1u5dTneo/uE1FbHGtDrTXG2yz2wNHjs2jBT/cqWKo3OnQ==
   dependencies:
     axios "^1.7.9"
     form-data "^4.0.1"

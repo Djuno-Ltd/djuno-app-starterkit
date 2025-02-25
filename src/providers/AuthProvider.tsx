@@ -11,7 +11,6 @@ import Loading from "../components/loading";
 import WalletModal from "../components/walletModal";
 import { animated, useTransition } from "@react-spring/web";
 import { useWallet } from "@solana/wallet-adapter-react";
-import { networkHandshakeApi, authApi } from "./../api/networksApi";
 import bs58 from "bs58";
 import { toast } from "react-hot-toast";
 import { useMetamask } from "./MetamaskProvider";

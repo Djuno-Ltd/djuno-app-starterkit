@@ -31,9 +31,9 @@ function ProfileComponent() {
   }, [handleGetProfile, handleGetProfileAvatar]);
 
   useEffect(() => {
-    setFullname(profile.Name || "");
-    setEmail(profile.Email || "");
-  }, [profile.Email, profile.Name]);
+    setFullname(profile?.Name || "");
+    setEmail(profile?.Email || "");
+  }, [profile?.Email, profile?.Name]);
 
   useEffect(() => {
     console.log(profileAvatar);
@@ -111,7 +111,7 @@ function ProfileComponent() {
               "flex w-full items-center gap-2 flex-wrap",
               styles.email,
               {
-                [styles.ok]: profile.confirmation === null && profile.Email,
+                [styles.ok]: profile?.confirmation === null && profile.Email,
               }
             )}
             style={{ position: "relative" }}
@@ -121,9 +121,9 @@ function ProfileComponent() {
               fullWidth={true}
               onChange={handleChangeEmail}
               value={email}
-              disabled={profile.confirmation === null && !!profile.Email}
+              disabled={profile?.confirmation === null && !!profile?.Email}
             />
-            {profile.confirmation === null && profile.Email && <OkIcon />}
+            {profile?.confirmation === null && profile.Email && <OkIcon />}
           </div>
 
           <Button withLoading={true} onClick={handleSave}>
