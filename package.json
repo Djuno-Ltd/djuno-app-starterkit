@@ -46,6 +46,7 @@
   },
   "scripts": {
     "start": "PORT=7200 react-app-rewired --openssl-legacy-provider start",
+    "start:win": "set PORT=7200 && react-app-rewired --openssl-legacy-provider start",
     "build": "react-app-rewired build",
     "test": "react-app-rewired test",
     "eject": "react-scripts eject"
