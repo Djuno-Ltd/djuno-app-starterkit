@@ -2,23 +2,31 @@
 
 A modern starter kit for building decentralized applications (dApps) with [Djuno Cloud](https://djuno.io). It includes built-in support for Web3Auth, IPFS integration, and automated workflows. The UI is powered by [djuno-design](https://github.com/Djuno-Ltd/djuno-design), a sleek component library built for Djuno-based apps.
 
+---
+
+## 🌿 Branch Overview
+
+This repository offers different starter flavors depending on your preferred integration method with Djuno Cloud:
+
+| Branch                                                                                | Description                                                                                                                                                                                                                                                       | Related Package(s)                         |
+| ------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------ |
+| [`main`](https://github.com/Djuno-Ltd/djuno-app-starterkit/tree/main)                 | Basic starter with direct REST API calls using `axios` and env-based configuration.                                                                                                                                                                               | Native REST                                |
+| [`hook-version`](https://github.com/Djuno-Ltd/djuno-app-starterkit/tree/hook-version) | Uses React hooks from the [`@djuno/web3auth-sdk`](https://www.npmjs.com/package/@djuno/web3auth-sdk) package for handling Web3 authentication. Ideal for hook-based architectures.                                                                                | `@djuno/web3auth-sdk`                      |
+| [`sdk-version`](https://github.com/Djuno-Ltd/djuno-app-starterkit/tree/sdk-version)   | Full integration using [`@djuno/wallet-sdk`](https://www.npmjs.com/package/@djuno/wallet-sdk) and [`@djuno/web3auth-sdk`](https://www.npmjs.com/package/@djuno/web3auth-sdk) for managing wallets, authentication, and transactions with high-level abstractions. | `@djuno/wallet-sdk`, `@djuno/web3auth-sdk` |
+
+> ✨ Choose the branch that matches your preferred integration style or abstraction level.
+
 ## ⚙️ Environment Setup
 
 Before running the project, create a `.env` file in the root and add the following variables:
 
 ```env
 REACT_APP_API_URL=https://web3auth.djuno.cloud/v1
-REACT_APP_ACCESS_KEY=your_access_key_from_djuno
-REACT_APP_WORKFLOW_URL=https://api.djuno.cloud/workflows/your_workflow_webhook
-REACT_APP_IPFS_URL=https://api.djuno.cloud/ipfs
-REACT_APP_IPFS_API_KEY=your_ipfs_api_key
+REACT_APP_ACCESS_KEY=<<YOUR_ACCESS_KEY_WEB3_AUTH>>
+REACT_APP_WORKFLOW_URL=<<WF-WEBHOOK>>
+REACT_APP_IPFS_URL=<<IPFS_URL>>
+REACT_APP_IPFS_API_KEY=<<IPFS_KEY>>
 ```
-
-You can obtain these values from your [Djuno Console](https://console.djuno.io):
-
-- `REACT_APP_ACCESS_KEY`: From **Web3Auth** section
-- `REACT_APP_WORKFLOW_URL`: From your selected workflow > webhook URL
-- `REACT_APP_IPFS_URL` and `REACT_APP_IPFS_API_KEY`: From **IPFS > API Settings**
 
 > ⚠️ Never commit or expose your `.env` file publicly.
 
@@ -68,16 +76,6 @@ Visit the GitHub repo for full documentation and customization examples.
 | Web3Auth     | Web3Auth Service    | [Web3Auth Docs](https://docs.djuno.io/en/articles/10108332-web3-0-auth-service) |
 | IPFS Uploads | IPFS API            | [IPFS Docs](https://docs.djuno.io/en/articles/10108735-managed-ipfs)            |
 | Workflows    | Workflow Automation | [Workflow Docs](https://docs.djuno.io/en/articles/10108417-workflow-studio)     |
-
-## 🧪 Testing
-
-Run the test suite with:
-
-```bash
-npm test
-```
-
-Customize test config via `react-app-rewired` if needed.
 
 ## 🚀 Deployment
 
