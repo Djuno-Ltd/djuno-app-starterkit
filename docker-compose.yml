@@ -1,0 +1,20 @@
+# docker compose up --build
+# docker push <username>/djuno-starter-kit:latest
+
+services:
+  djuno-starter-kit:
+    platform: linux/amd64
+    # image: <username>/djuno-starter-kit:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        REACT_APP_API_URL: ${REACT_APP_API_URL}
+        REACT_APP_ACCESS_KEY: ${REACT_APP_ACCESS_KEY}
+        REACT_APP_WORKFLOW_URL: ${REACT_APP_WORKFLOW_URL}
+        REACT_APP_IPFS_URL: ${REACT_APP_IPFS_URL}
+        REACT_APP_IPFS_API_KEY: ${REACT_APP_IPFS_API_KEY}
+    ports:
+      - "8080:80"
+    env_file:
+      - .env.local

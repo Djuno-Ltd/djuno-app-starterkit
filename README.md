@@ -16,9 +16,11 @@ This repository offers different starter flavors depending on your preferred int
 
 > ✨ Choose the branch that matches your preferred abstraction level and framework. `hook-version` is ideal for React apps, while `sdk-version` offers more control and flexibility.
 
+---
+
 ## ⚙️ Environment Setup
 
-Before running the project, create a `.env` file in the root and add the following variables:
+Before running the project, create a `.env.local` file in the root and add the following variables:
 
 ```env
 REACT_APP_API_URL=https://web3auth.djuno.cloud/v1
@@ -28,9 +30,11 @@ REACT_APP_IPFS_URL=<<IPFS_URL>>
 REACT_APP_IPFS_API_KEY=<<IPFS_KEY>>
 ```
 
-> ⚠️ Never commit or expose your `.env` file publicly.
+> ⚠️ Never commit or expose your `.env.local` file publicly.
 
-## 🛠️ Getting Started
+---
+
+## 🛠️ Getting Started (Local Development)
 
 1. **Clone the repository**
 
@@ -51,13 +55,39 @@ npm install
 npm start
 ```
 
-> The development server will start at [http://localhost:7200](http://localhost:7200) (Port 7200 is defined in the `package.json`)
+> The development server will start at [http://localhost:7200](http://localhost:7200)
 
 > Windows users can use:
 
 ```bash
 npm run start:win
 ```
+
+---
+
+## 🐳 Running with Docker Compose
+
+If you'd like to run the app as a production-ready static site served by Nginx:
+
+1. **Ensure your `.env.local` is set up** as shown above.
+
+2. **Build and run the container:**
+
+```bash
+docker compose up --build
+```
+
+3. Visit your app at [http://localhost:8080](http://localhost:8080)
+
+> This will:
+>
+> - Embed the environment variables during the build
+> - Build the React app with `react-app-rewired build`
+> - Serve the compiled app using Nginx
+
+> The Dockerfile and Nginx config are included in the repo.
+
+---
 
 ## 📜 Available Scripts
 
@@ -67,7 +97,7 @@ npm run start:win
 - `npm test`: Launches the test runner
 - `npm run eject`: Ejects CRA configuration (not reversible)
 
-Visit the GitHub repo for full documentation and customization examples.
+---
 
 ## 🌐 Djuno Cloud Integrations
 
@@ -76,6 +106,8 @@ Visit the GitHub repo for full documentation and customization examples.
 | Web3Auth     | Web3Auth Service    | [Web3Auth Docs](https://docs.djuno.io/en/articles/10108332-web3-0-auth-service) |
 | IPFS Uploads | IPFS API            | [IPFS Docs](https://docs.djuno.io/en/articles/10108735-managed-ipfs)            |
 | Workflows    | Workflow Automation | [Workflow Docs](https://docs.djuno.io/en/articles/10108417-workflow-studio)     |
+
+---
 
 ## 🚀 Deployment
 
@@ -93,6 +125,8 @@ You can deploy the contents of the `/build` folder to any static hosting provide
 - **Firebase Hosting**
 - **AWS S3 + CloudFront**
 
+---
+
 ## 🤝 Contributing
 
 We welcome contributions! Feel free to open an issue or submit a pull request.
@@ -107,6 +141,8 @@ git commit -m "Add my feature"
 # Push and open a PR
 git push origin feature/my-feature
 ```
+
+---
 
 ## 🛡 License
 
