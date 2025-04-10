@@ -14,7 +14,6 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import bs58 from "bs58";
 import { toast } from "react-hot-toast";
 import { useMetamask } from "./MetamaskProvider";
-import { useAppDispatch } from "../hooks";
 import { getStorage, setStorage, removeStorage } from "../utils/helper";
 import { useWeb3Auth } from "@djuno/web3auth-hook";
 
@@ -47,8 +46,6 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
     disconnect: metaDisconnect,
     getRealAddress,
   } = useMetamask();
-
-  const dispatch = useAppDispatch();
 
   const logout = useCallback(() => {
     disconnect().then().catch();

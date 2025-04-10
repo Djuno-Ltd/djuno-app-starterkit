@@ -12,14 +12,10 @@ import { MetaMaskProvider } from "./providers/MetamaskProvider";
 import HomePage from "./pages/HomePage";
 import SettingsPage from "./pages/SettingsPage";
 import NotFindPage from "./pages/NotFindPage";
-import { pdfjs as pdfjs_react } from "react-pdf";
 import SearchProvider from "./providers/SearchProvider";
 import FilesPage from "./pages/FilesPage";
 import { Web3authProvider } from "@djuno/web3auth-hook";
 import Web3AuthSettingProvider from "./providers/Web3authSettingProvider";
-
-pdfjs_react.GlobalWorkerOptions.workerSrc =
-  "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement

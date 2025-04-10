@@ -39,10 +39,6 @@ code {
   animation: spin 0.5s infinite linear;
 }
 
-.signer-manager .react-pdf__Page__canvas {
-  margin: auto;
-}
-
 .Nothing-font {
   font-family: "Nothing You Could Do", cursive;
 }

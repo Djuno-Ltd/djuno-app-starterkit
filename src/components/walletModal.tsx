@@ -17,8 +17,9 @@ function WalletModal({ absolute }: { absolute?: boolean }) {
   const { networks, getNetworks } = useWeb3Auth();
 
   useEffect(() => {
-    networks.length === 0 && getNetworks();
-  }, [getNetworks, networks.length]);
+    getNetworks();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleClick = (walletName: WalletName) => {
     select(walletName);
