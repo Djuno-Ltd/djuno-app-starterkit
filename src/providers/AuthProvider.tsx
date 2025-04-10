@@ -11,15 +11,12 @@ import Loading from "../components/loading";
 import WalletModal from "../components/walletModal";
 import { animated, useTransition } from "@react-spring/web";
 import { useWallet } from "@solana/wallet-adapter-react";
-import { networkHandshakeApi, authApi } from "./../api/networksApi";
 import bs58 from "bs58";
 import { toast } from "react-hot-toast";
 import { useMetamask } from "./MetamaskProvider";
 import { useAppDispatch } from "../hooks";
-import { fetchProfile } from "../store/profileSlice";
 import { getStorage, setStorage, removeStorage } from "../utils/helper";
-import { useMatch } from "react-router-dom";
-// import { useMatch } from "react-router-dom";
+import { useWeb3Auth } from "@djuno/web3auth-hook";
 
 export type AuthContextType = {
   logout: () => void;
@@ -37,6 +34,7 @@ export const AuthContext = createContext<AuthContextType>({
 });
 
 const AuthProvider = ({ children }: PropsWithChildren) => {
+  const { handshake, verify, getProfile } = useWeb3Auth();
   const [status, setStatus] = useState<Status>("connect_wallet");
   const { publicKey, signMessage, connecting, disconnect, connected, wallet } =
     useWallet();
@@ -82,18 +80,14 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
 
   useEffect(() => {
     if (publicKey !== null) {
-      // if (isMatchSignPage === null)
       getToken(getStorage("networkId"), getStorage("token"));
-      // else if (isMatchSignPage) setStatus("sign");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [publicKey]);
 
   useEffect(() => {
     if (accounts.length > 0 && getStorage("networkName") !== "solana") {
-      // if (isMatchSignPage === null)
       getMetaToken(getStorage("networkId"), getStorage("token"));
-      // else if (isMatchSignPage) setStatus("sign");
     } else {
       metaLogout();
     }
@@ -110,7 +104,7 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
       try {
         setStorage("token", token);
         setStorage("publicKey", publicKey.toBase58());
-        dispatch(fetchProfile());
+        getProfile(token);
         setStatus("ok");
       } catch (e) {
         logout();
@@ -122,24 +116,27 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
         await login(token);
       } else {
         setStatus("loading");
-        // localStorage.removeItem("publicKey");
-        // localStorage.removeItem("network");
         const walletName = wallet?.adapter.name.toLowerCase();
-        if (walletName) {
-          const { data } = await networkHandshakeApi(
-            networkId.toString(),
-            publicKey.toBase58()
-          );
-          const message = new TextEncoder().encode(data);
-          const signature = await signMessage(message);
-          const authResponse = await authApi(
-            networkId.toString(),
-            publicKey.toBase58(),
-            bs58.encode(signature)
-          );
-          if (authResponse.data === null) logout();
-          else login(authResponse.data);
-        }
+        if (!walletName) return;
+
+        const response = await handshake(
+          networkId.toString(),
+          publicKey.toBase58()
+        );
+
+        if (!response) return;
+
+        const message = new TextEncoder().encode(response);
+        const signature = await signMessage(message);
+
+        const authResponse = await verify(
+          networkId.toString(),
+          publicKey.toBase58(),
+          bs58.encode(signature)
+        );
+
+        if (authResponse === null) logout();
+        else login(authResponse);
       }
     } catch (e: any) {
       console.log("getToken called catch!", e);
@@ -167,17 +164,7 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
           if (accounts[0]) {
             setStorage("token", token);
             setStorage("publicKey", getRealAddress(accounts[0]));
-            // const { result } = await djibConn.status();
-            // @ts-ignore
-            dispatch(fetchProfile());
-            // let statusState = {
-            //   used: result.cloud.used_size_kb,
-            //   total: result.cloud.total_size_kb,
-            //   updateAt: result.cloud.updated_at,
-            //   createAt: result.cloud.created_at,
-            //   prizes: result.prizes,
-            // };
-
+            getProfile(token);
             setStatus("ok");
           } else {
             metaLogout();
@@ -191,23 +178,24 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
         if (token && getStorage("publicKey") === getRealAddress(accounts[0])) {
           await login(token);
         } else {
-          // localStorage.removeItem("publicKey");
-          // localStorage.removeItem("network");
-          const { data } = await networkHandshakeApi(
+          // if (!client) return;
+          const response = await handshake(
             networkId.toString(),
             getRealAddress(accounts[0])
           );
+          if (!response) return;
 
-          const signature = await metaSignMessage(data);
-          if (signature) {
-            const authResponse = await authApi(
-              networkId.toString(),
-              getRealAddress(accounts[0]),
-              signature
-            );
-            if (authResponse.data === null) metaLogout("authenticated error!");
-            else login(authResponse.data);
-          }
+          const signature = await metaSignMessage(response);
+          if (!signature) return;
+
+          const authResponse = await verify(
+            networkId.toString(),
+            getRealAddress(accounts[0]),
+            signature
+          );
+
+          if (authResponse === null) metaLogout("authenticated error!");
+          else login(authResponse);
         }
       } catch (e: any) {
         console.log("getToken called catch!", e);
@@ -221,7 +209,15 @@ const AuthProvider = ({ children }: PropsWithChildren) => {
         metaLogout();
       }
     },
-    [accounts, metaSignMessage, metaLogout, getRealAddress, dispatch]
+    [
+      accounts,
+      metaSignMessage,
+      metaLogout,
+      getRealAddress,
+      getProfile,
+      handshake,
+      verify,
+    ]
   );
 
   const contextValue = useMemo(

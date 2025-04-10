@@ -4,24 +4,21 @@ import { WalletIcon } from "@solana/wallet-adapter-react-ui";
 import { useEffect } from "react";
 import styles from "./../styles/WalletModal.module.scss";
 import { ReactComponent as Logo } from "../assets/icons/logo.svg";
-import { useAppDispatch, useAppSelector } from "../hooks";
-import {
-  selectNetworks,
-  selectSelectedNetwork,
-  getNetworksAsync,
-} from "./../store/networksSlice";
 import NetworksDropdown from "./networksDropdown";
 import { useMetamask, MetamaskIcon } from "../providers/MetamaskProvider";
+import { useWeb3authSetting } from "../providers/Web3authSettingProvider";
+import { useWeb3Auth } from "@djuno/web3auth-hook";
 
 function WalletModal({ absolute }: { absolute?: boolean }) {
   const { wallets, select } = useWallet();
   const { connect } = useMetamask();
-  const selectedNetwork = useAppSelector(selectSelectedNetwork);
-  const networks = useAppSelector(selectNetworks);
-  const dispatch = useAppDispatch();
+
+  const { selectedNetwork } = useWeb3authSetting();
+  const { networks, getNetworks } = useWeb3Auth();
+
   useEffect(() => {
-    networks.length === 0 && dispatch(getNetworksAsync());
-  }, [dispatch, networks.length]);
+    networks.length === 0 && getNetworks();
+  }, [getNetworks, networks.length]);
 
   const handleClick = (walletName: WalletName) => {
     select(walletName);
@@ -54,7 +51,7 @@ function WalletModal({ absolute }: { absolute?: boolean }) {
             ))}
           {selectedNetwork &&
             selectedNetwork.NetworkName !== "solana" &&
-            selectedNetwork.WalletResponses.map((wallet) => (
+            selectedNetwork.WalletResponses.map((wallet: any) => (
               <li
                 key={`wallet-${wallet.WalletName}`}
                 onClick={() => handleMetaClick(selectedNetwork.ChainId)}

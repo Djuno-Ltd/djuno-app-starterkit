@@ -12,17 +12,11 @@ import { MetaMaskProvider } from "./providers/MetamaskProvider";
 import HomePage from "./pages/HomePage";
 import SettingsPage from "./pages/SettingsPage";
 import NotFindPage from "./pages/NotFindPage";
-// import * as pdfjs from "pdfjs-dist";
 import { pdfjs as pdfjs_react } from "react-pdf";
 import SearchProvider from "./providers/SearchProvider";
 import FilesPage from "./pages/FilesPage";
-
-// pdfjs.GlobalWorkerOptions.workerSrc =
-//   "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.6.172/pdf.worker.min.js";
-// new URL(
-//   "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.1.266/pdf.worker.min.js",
-//   import.meta.url
-// ).toString();
+import { Web3authProvider } from "@djuno/web3auth-hook";
+import Web3AuthSettingProvider from "./providers/Web3authSettingProvider";
 
 pdfjs_react.GlobalWorkerOptions.workerSrc =
   "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js";
@@ -32,29 +26,35 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <Provider store={store}>
-    <MetaMaskProvider>
-      <SolanaWalletsProvider>
-        <SearchProvider>
-          <BrowserRouter>
-            <Routes>
-              <Route
-                path="/"
-                element={
-                  <AuthProvider>
-                    <App />
-                  </AuthProvider>
-                }
-              >
-                <Route index element={<HomePage />} />
-                <Route path="files" element={<FilesPage />} />
-                <Route path="settings" element={<SettingsPage />} />
-              </Route>
-              <Route path="*" element={<NotFindPage />} />
-            </Routes>
-          </BrowserRouter>
-        </SearchProvider>
-      </SolanaWalletsProvider>
-    </MetaMaskProvider>
+    <Web3authProvider
+      clientConfigs={{ accessKey: process.env.REACT_APP_ACCESS_KEY || "" }}
+    >
+      <Web3AuthSettingProvider>
+        <MetaMaskProvider>
+          <SolanaWalletsProvider>
+            <SearchProvider>
+              <BrowserRouter>
+                <Routes>
+                  <Route
+                    path="/"
+                    element={
+                      <AuthProvider>
+                        <App />
+                      </AuthProvider>
+                    }
+                  >
+                    <Route index element={<HomePage />} />
+                    <Route path="files" element={<FilesPage />} />
+                    <Route path="settings" element={<SettingsPage />} />
+                  </Route>
+                  <Route path="*" element={<NotFindPage />} />
+                </Routes>
+              </BrowserRouter>
+            </SearchProvider>
+          </SolanaWalletsProvider>
+        </MetaMaskProvider>
+      </Web3AuthSettingProvider>
+    </Web3authProvider>
   </Provider>
 );
 

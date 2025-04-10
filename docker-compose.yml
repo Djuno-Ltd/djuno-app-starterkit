@@ -1,10 +1,10 @@
 # docker compose up --build
-# docker push <username>/djuno-starter-kit:latest
+# docker push djuno-app-starterkit:latest
 
 services:
   djuno-starter-kit:
-    platform: linux/amd64
-    # image: <username>/djuno-starter-kit:latest
+    platform: linux/amd64 # or linux/arm64
+    image: djuno-app-starterkit:latest
     build:
       context: .
       dockerfile: Dockerfile

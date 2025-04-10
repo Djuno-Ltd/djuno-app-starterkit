@@ -1,5 +1,5 @@
-# docker build -t djuno-starter-kit .
-# docker run -p 8080:80 djuno-starter-kit
+# docker build -t djuno-app-starterkit .
+# docker run -p 8080:80 djuno-app-starterkit
 
 # Step 1: Build React app using Node.js
 FROM node:18-alpine AS build
