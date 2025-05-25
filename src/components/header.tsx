@@ -5,9 +5,9 @@ import { ReactComponent as TextLogo } from "../assets/icons/logo-text.svg";
 import { ReactComponent as SearchIcon } from "../assets/icons/search.svg";
 import IconButton from "./iconButton";
 import SearchInput from "./searchInput";
-import WalletDropdown from "./walletDropdown";
+import { WalletInfoButton } from "@djuno/web3auth-ui";
 import useWindowOnClick from "../hooks/useWindowOnClick";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export type HeaderProps = {
   withoutSearch?: boolean;
@@ -26,6 +26,8 @@ function Header({
   renderSearchInput,
 }: HeaderProps) {
   const [openMobileSearch, setOpenMobileSearch] = useState(false);
+
+  const navigate = useNavigate();
 
   useWindowOnClick(
     () => {
@@ -73,7 +75,12 @@ function Header({
         </>
       )}
 
-      <WalletDropdown />
+      <div className="flex ml-auto">
+        <WalletInfoButton
+          anchor="bottom end"
+          handleGoProfile={() => navigate("/settings")}
+        />
+      </div>
       {!withoutSearch && (
         <div className="ml-2 lg:hidden">
           <IconButton onClick={handleClickMobileSearchBtn}>
